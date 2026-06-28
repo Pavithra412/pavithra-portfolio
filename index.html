@@ -8,425 +8,413 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --ink:#11151B;
-    --ink-soft:#8B93A1;
-    --paper:#F5F2EC;
-    --paper-ink:#1E2127;
-    --paper-soft:#6B6358;
-    --signal:#FF5A3C;
-    --thread:#C9A227;
-    --line:#DAD4C6;
-    --maxw:1080px;
-  }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    margin:0;
-    background:var(--paper);
-    color:var(--paper-ink);
-    font-family:'Inter',sans-serif;
-    line-height:1.6;
-  }
-  a{color:inherit;}
-  :focus-visible{outline:3px solid var(--signal); outline-offset:3px;}
-
-  .mono{font-family:'Space Mono',monospace;}
-  .display{font-family:'Fraunces',serif;}
-
-  /* ---------- HERO ---------- */
-  .hero{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    min-height:100vh;
-    position:relative;
-  }
-  .hero-ink{
-    background:var(--ink);
-    color:#E8E6E1;
-    padding:48px clamp(24px,5vw,64px);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    position:relative;
-  }
-  .hero-paper{
-    background:var(--paper);
-    padding:48px clamp(24px,5vw,64px);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    position:relative;
-  }
-  .seam{
-    position:absolute;
-    top:0; bottom:0; left:0;
-    width:2px;
-    background-image:repeating-linear-gradient(to bottom, var(--thread) 0 10px, transparent 10px 22px);
-    transform:translateX(-1px);
-  }
-  .hero-paper .seam{ display:block; }
-  .seam-tag{
-    position:absolute;
-    left:0; top:50%;
-    transform:translate(-50%,-50%);
-    background:var(--paper);
-    border:1px solid var(--thread);
-    color:var(--paper-soft);
-    font-size:11px;
-    letter-spacing:.06em;
-    padding:6px 10px;
-    border-radius:99px;
-    white-space:nowrap;
-  }
-
-  .code-block{
-    font-size:14px;
-    line-height:1.9;
-    color:#AEB6C2;
-  }
-  .code-block .k{color:#E8E6E1;}
-  .code-block .s{color:var(--thread);}
-  .code-block .c{color:#5C6573;}
-  .status-dot{
-    display:inline-block;
-    width:8px;height:8px;
-    border-radius:50%;
-    background:#4ADE80;
-    margin-right:6px;
-    box-shadow:0 0 0 0 rgba(74,222,128,.6);
-    animation:pulse 2.4s infinite;
-  }
-  @media (prefers-reduced-motion:reduce){ .status-dot{animation:none;} }
-  @keyframes pulse{
-    0%{box-shadow:0 0 0 0 rgba(74,222,128,.5);}
-    70%{box-shadow:0 0 0 8px rgba(74,222,128,0);}
-    100%{box-shadow:0 0 0 0 rgba(74,222,128,0);}
-  }
-
-  .eyebrow{
-    font-family:'Space Mono',monospace;
-    font-size:12px;
-    letter-spacing:.1em;
-    text-transform:uppercase;
-    color:var(--signal);
-    margin:0 0 18px;
-  }
-  h1.name{
-    font-family:'Fraunces',serif;
-    font-weight:600;
-    font-size:clamp(40px,6vw,64px);
-    line-height:1.04;
-    margin:0 0 14px;
-  }
-  .tagline{
-    font-size:clamp(17px,2vw,20px);
-    color:var(--paper-soft);
-    max-width:30ch;
-    margin:0 0 28px;
-  }
-  .hero-cta{display:flex; gap:14px; flex-wrap:wrap;}
-  .btn{
-    font-family:'Space Mono',monospace;
-    font-size:13px;
-    padding:13px 22px;
-    border-radius:4px;
-    text-decoration:none;
-    display:inline-block;
-    transition:transform .15s ease;
-  }
-  .btn:hover{transform:translateY(-2px);}
-  @media (prefers-reduced-motion:reduce){ .btn:hover{transform:none;} }
-  .btn-solid{background:var(--signal); color:#fff;}
-  .btn-outline{border:1.5px solid var(--paper-ink); color:var(--paper-ink);}
-
-  /* ---------- SECTIONS ---------- */
-  section{
-    max-width:var(--maxw);
-    margin:0 auto;
-    padding:90px 24px;
-  }
-  .stitch{
-    height:2px;
-    background-image:repeating-linear-gradient(to right, var(--thread) 0 10px, transparent 10px 20px);
-  }
-  .section-head{
-    display:flex;
-    align-items:baseline;
-    gap:14px;
-    margin-bottom:36px;
-  }
-  .section-num{
-    font-family:'Space Mono',monospace;
-    color:var(--ink-soft);
-    font-size:13px;
-  }
-  h2{
-    font-family:'Fraunces',serif;
-    font-weight:600;
-    font-size:clamp(26px,3.4vw,34px);
-    margin:0;
-  }
-
-  .lede{
-    font-family:'Fraunces',serif;
-    font-style:italic;
-    font-size:clamp(20px,2.6vw,25px);
-    line-height:1.5;
-    max-width:38ch;
-    margin:0 0 22px;
-  }
-  .about-grid{
-    display:grid;
-    grid-template-columns:1.1fr .9fr;
-    gap:48px;
-    align-items:start;
-  }
-  .about-grid p{ color:var(--paper-soft); max-width:46ch; }
-
-  .toolkit-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:40px;
-  }
-  .toolkit-label{
-    font-family:'Space Mono',monospace;
-    font-size:12px;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    color:var(--paper-soft);
-    margin:0 0 14px;
-  }
-  .tags{ display:flex; flex-wrap:wrap; gap:8px; }
-  .tag{
-    font-family:'Space Mono',monospace;
-    font-size:13px;
-    border:1px solid var(--line);
-    padding:7px 12px;
-    border-radius:99px;
-    background:#fff;
-    transition:border-color .15s ease, color .15s ease;
-  }
-  .tag:hover{ border-color:var(--signal); color:var(--signal); }
-
-  /* training log */
-  .terminal{
-    background:var(--ink);
-    color:#D7DCE2;
-    border-radius:8px;
-    padding:28px clamp(20px,4vw,36px);
-    font-family:'Space Mono',monospace;
-    font-size:14px;
-  }
-  .terminal .prompt{ color:var(--signal); }
-  .terminal ul{ list-style:none; margin:16px 0 0; padding:0; }
-  .terminal li{ margin-bottom:9px; }
-  .terminal .check{ color:#4ADE80; margin-right:10px; }
-  .terminal .footnote{ color:#7C8595; margin-top:18px; }
-
-  /* work cards */
-  .cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:24px;
-  }
-  .card{
-    border:1px solid var(--line);
-    border-radius:10px;
-    padding:26px;
-    background:#fff;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-  }
-  .badge{
-    font-family:'Space Mono',monospace;
-    font-size:11px;
-    letter-spacing:.05em;
-    text-transform:uppercase;
-    align-self:flex-start;
-    padding:4px 10px;
-    border-radius:99px;
-  }
-  .badge-live{ background:#E9F4EC; color:#1F7A41; }
-  .badge-intern{ background:#EAEEF7; color:#33508C; }
-  .badge-practice{ background:#FBEFE3; color:#A35A12; }
-  .card h3{
-    font-family:'Fraunces',serif;
-    font-size:19px;
-    margin:0;
-  }
-  .card p{ color:var(--paper-soft); font-size:14.5px; margin:0; }
-  .card ul{ margin:0; padding-left:18px; color:var(--paper-soft); font-size:14px; }
-  .placeholder{
-    border:1.5px dashed var(--line);
-    border-radius:6px;
-    padding:10px 12px;
-    font-family:'Space Mono',monospace;
-    font-size:12px;
-    color:var(--ink-soft);
-    margin-top:4px;
-  }
-
-  /* contact */
-  .contact{
-    text-align:center;
-  }
-  .contact h2{ font-size:clamp(30px,5vw,44px); }
-  .contact-links{
-    display:flex;
-    justify-content:center;
-    gap:18px;
-    flex-wrap:wrap;
-    margin-top:26px;
-    font-family:'Space Mono',monospace;
-    font-size:14px;
-  }
-  .contact-links a{ text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:2px; }
-  .contact-links a:hover{ border-color:var(--signal); color:var(--signal); }
-  footer{
-    text-align:center;
-    padding:30px;
-    font-family:'Space Mono',monospace;
-    font-size:12px;
-    color:var(--ink-soft);
-  }
-
-  .reveal{ opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease; }
-  .reveal.in{ opacity:1; transform:none; }
-  @media (prefers-reduced-motion:reduce){ .reveal{ opacity:1; transform:none; } }
-
-  @media (max-width:760px){
-    .hero{ grid-template-columns:1fr; }
-    .hero-ink, .hero-paper{ padding:40px 22px; }
-    .hero-paper .seam{ display:none; }
-    .about-grid, .toolkit-grid{ grid-template-columns:1fr; }
-  }
+:root{
+--ink:#11151B;
+--ink-soft:#8B93A1;
+--paper:#F5F2EC;
+--paper-ink:#1E2127;
+--paper-soft:#6B6358;
+--signal:#FF5A3C;
+--thread:#C9A227;
+--line:#DAD4C6;
+--maxw:1080px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+margin:0;
+background:var(--paper);
+color:var(--paper-ink);
+font-family:'Inter',sans-serif;
+line-height:1.6;
+}
+a{color:inherit;}
+:focus-visible{outline:3px solid var(--signal); outline-offset:3px;}
+.mono{font-family:'Space Mono',monospace;}
+.display{font-family:'Fraunces',serif;}
+/* ---------- HERO ---------- */
+.hero{
+display:grid;
+grid-template-columns:1fr 1fr;
+min-height:100vh;
+position:relative;
+}
+.hero-ink{
+background:var(--ink);
+color:#E8E6E1;
+padding:48px clamp(24px,5vw,64px);
+display:flex;
+flex-direction:column;
+justify-content:center;
+position:relative;
+}
+.hero-paper{
+background:var(--paper);
+padding:48px clamp(24px,5vw,64px);
+display:flex;
+flex-direction:column;
+justify-content:center;
+position:relative;
+}
+.seam{
+position:absolute;
+top:0; bottom:0; left:0;
+width:2px;
+background-image:repeating-linear-gradient(to bottom, var(--thread) 0 10px, transparent 10px 22px);
+transform:translateX(-1px);
+}
+.hero-paper .seam{ display:block; }
+.seam-tag{
+position:absolute;
+left:0; top:50%;
+transform:translate(-50%,-50%);
+background:var(--paper);
+border:1px solid var(--thread);
+color:var(--paper-soft);
+font-size:11px;
+letter-spacing:.06em;
+padding:6px 10px;
+border-radius:99px;
+white-space:nowrap;
+}
+.code-block{
+font-size:14px;
+line-height:1.9;
+color:#AEB6C2;
+}
+.code-block .k{color:#E8E6E1;}
+.code-block .s{color:var(--thread);}
+.code-block .c{color:#5C6573;}
+.status-dot{
+display:inline-block;
+width:8px;height:8px;
+border-radius:50%;
+background:#4ADE80;
+margin-right:6px;
+box-shadow:0 0 0 0 rgba(74,222,128,.6);
+animation:pulse 2.4s infinite;
+}
+@media (prefers-reduced-motion:reduce){ .status-dot{animation:none;} }
+@keyframes pulse{
+0%{box-shadow:0 0 0 0 rgba(74,222,128,.5);}
+70%{box-shadow:0 0 0 8px rgba(74,222,128,0);}
+100%{box-shadow:0 0 0 0 rgba(74,222,128,0);}
+}
+.eyebrow{
+font-family:'Space Mono',monospace;
+font-size:12px;
+letter-spacing:.1em;
+text-transform:uppercase;
+color:var(--signal);
+margin:0 0 18px;
+}
+h1.name{
+font-family:'Fraunces',serif;
+font-weight:600;
+font-size:clamp(40px,6vw,64px);
+line-height:1.04;
+margin:0 0 14px;
+}
+.tagline{
+font-size:clamp(17px,2vw,20px);
+color:var(--paper-soft);
+max-width:30ch;
+margin:0 0 28px;
+}
+.hero-cta{display:flex; gap:14px; flex-wrap:wrap;}
+.btn{
+font-family:'Space Mono',monospace;
+font-size:13px;
+padding:13px 22px;
+border-radius:4px;
+text-decoration:none;
+display:inline-block;
+transition:transform .15s ease;
+}
+.btn:hover{transform:translateY(-2px);}
+@media (prefers-reduced-motion:reduce){ .btn:hover{transform:none;} }
+.btn-solid{background:var(--signal); color:#fff;}
+.btn-outline{border:1.5px solid var(--paper-ink); color:var(--paper-ink);}
+/* ---------- SECTIONS ---------- */
+section{
+max-width:var(--maxw);
+margin:0 auto;
+padding:90px 24px;
+}
+.stitch{
+height:2px;
+background-image:repeating-linear-gradient(to right, var(--thread) 0 10px, transparent 10px 20px);
+}
+.section-head{
+display:flex;
+align-items:baseline;
+gap:14px;
+margin-bottom:36px;
+}
+.section-num{
+font-family:'Space Mono',monospace;
+color:var(--ink-soft);
+font-size:13px;
+}
+h2{
+font-family:'Fraunces',serif;
+font-weight:600;
+font-size:clamp(26px,3.4vw,34px);
+margin:0;
+}
+.lede{
+font-family:'Fraunces',serif;
+font-style:italic;
+font-size:clamp(20px,2.6vw,25px);
+line-height:1.5;
+max-width:38ch;
+margin:0 0 22px;
+}
+.about-grid{
+display:grid;
+grid-template-columns:1.1fr .9fr;
+gap:48px;
+align-items:start;
+}
+.about-grid p{ color:var(--paper-soft); max-width:46ch; }
+.toolkit-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:40px;
+}
+.toolkit-label{
+font-family:'Space Mono',monospace;
+font-size:12px;
+letter-spacing:.08em;
+text-transform:uppercase;
+color:var(--paper-soft);
+margin:0 0 14px;
+}
+.tags{ display:flex; flex-wrap:wrap; gap:8px; }
+.tag{
+font-family:'Space Mono',monospace;
+font-size:13px;
+border:1px solid var(--line);
+padding:7px 12px;
+border-radius:99px;
+background:#fff;
+transition:border-color .15s ease, color .15s ease;
+}
+.tag:hover{ border-color:var(--signal); color:var(--signal); }
+/* training log */
+.terminal{
+background:var(--ink);
+color:#D7DCE2;
+border-radius:8px;
+padding:28px clamp(20px,4vw,36px);
+font-family:'Space Mono',monospace;
+font-size:14px;
+}
+.terminal .prompt{ color:var(--signal); }
+.terminal ul{ list-style:none; margin:16px 0 0; padding:0; }
+.terminal li{ margin-bottom:9px; }
+.terminal .check{ color:#4ADE80; margin-right:10px; }
+.terminal .footnote{ color:#7C8595; margin-top:18px; }
+/* work cards */
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:24px;
+}
+.card{
+border:1px solid var(--line);
+border-radius:10px;
+padding:26px;
+background:#fff;
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+.badge{
+font-family:'Space Mono',monospace;
+font-size:11px;
+letter-spacing:.05em;
+text-transform:uppercase;
+align-self:flex-start;
+padding:4px 10px;
+border-radius:99px;
+}
+.badge-live{ background:#E9F4EC; color:#1F7A41; }
+.badge-intern{ background:#EAEEF7; color:#33508C; }
+.badge-practice{ background:#FBEFE3; color:#A35A12; }
+.card h3{
+font-family:'Fraunces',serif;
+font-size:19px;
+margin:0;
+}
+.card p{ color:var(--paper-soft); font-size:14.5px; margin:0; }
+.card ul{ margin:0; padding-left:18px; color:var(--paper-soft); font-size:14px; }
+.placeholder{
+border:1.5px dashed var(--line);
+border-radius:6px;
+padding:10px 12px;
+font-family:'Space Mono',monospace;
+font-size:12px;
+color:var(--ink-soft);
+margin-top:4px;
+}
+/* contact */
+.contact{
+text-align:center;
+}
+.contact h2{ font-size:clamp(30px,5vw,44px); }
+.contact-links{
+display:flex;
+justify-content:center;
+gap:18px;
+flex-wrap:wrap;
+margin-top:26px;
+font-family:'Space Mono',monospace;
+font-size:14px;
+}
+.contact-links a{ text-decoration:none; border-bottom:1px solid var(--line); padding-bottom:2px; }
+.contact-links a:hover{ border-color:var(--signal); color:var(--signal); }
+footer{
+text-align:center;
+padding:30px;
+font-family:'Space Mono',monospace;
+font-size:12px;
+color:var(--ink-soft);
+}
+.reveal{ opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease; }
+.reveal.in{ opacity:1; transform:none; }
+@media (prefers-reduced-motion:reduce){ .reveal{ opacity:1; transform:none; } }
+@media (max-width:760px){
+.hero{ grid-template-columns:1fr; }
+.hero-ink, .hero-paper{ padding:40px 22px; }
+.hero-paper .seam{ display:none; }
+.about-grid, .toolkit-grid{ grid-template-columns:1fr; }
+}
 </style><style>
-  .nav-mini{position:fixed;top:18px;right:18px;z-index:10;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;max-width:720px}
-  .nav-mini a,.nav-mini button{font-family:'Space Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.05em;border:1px solid rgba(201,162,39,.55);background:rgba(245,242,236,.86);color:var(--paper-ink);padding:8px 10px;border-radius:99px;text-decoration:none;backdrop-filter:blur(8px);cursor:pointer}
-  .nav-mini a:hover,.nav-mini button:hover{background:var(--signal);border-color:var(--signal);color:#fff}
-  .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.hero-cta a{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--paper-ink);padding:12px 16px;border-radius:99px;text-decoration:none;font-weight:600}.hero-cta a:first-child{background:var(--paper-ink);color:var(--paper)}.hero-cta a:hover{background:var(--signal);border-color:var(--signal);color:#fff}.open-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--thread);border-radius:99px;padding:7px 11px;color:var(--paper-soft);width:max-content}.open-badge span{width:8px;height:8px;border-radius:50%;background:#29a36a;box-shadow:0 0 0 6px rgba(41,163,106,.12)}.cards.three{grid-template-columns:repeat(3,1fr)}.cards.four{grid-template-columns:repeat(4,1fr)}.mini-card{border:1px solid var(--line);background:rgba(255,255,255,.2);padding:20px;border-radius:0;min-height:150px}.mini-card h3{margin:0 0 8px}.mini-card p{margin:0;color:var(--paper-soft)}.skill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.skill-pill{border:1px solid var(--line);background:#fff8ed;padding:16px;font-weight:600}.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.shot{border:1px solid var(--line);background:#fff8ed}.shot-img{aspect-ratio:16/10;display:grid;place-items:center;background:var(--ink);color:#e8e6e1;font-family:'Space Mono',monospace;font-size:12px;text-align:center;padding:16px}.shot h3{padding:14px;margin:0}.download-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.download-card{display:block;border:1px solid var(--line);background:#fff8ed;padding:22px;text-decoration:none}.download-card:hover{border-color:var(--signal);transform:translateY(-3px)}.roadmap{display:grid;gap:12px}.roadmap-item{display:grid;grid-template-columns:48px 1fr;gap:16px;align-items:start}.roadmap-num{width:40px;height:40px;border:1px solid var(--thread);border-radius:50%;display:grid;place-items:center;font-family:'Space Mono',monospace;color:var(--signal);background:var(--paper)}.form{display:grid;gap:12px;max-width:760px;margin:28px auto 0}.form input,.form textarea{width:100%;border:1px solid var(--line);background:#fff8ed;padding:13px 14px;color:var(--paper-ink)}.form textarea{min-height:130px}.progress{position:fixed;top:0;left:0;height:3px;background:var(--signal);z-index:11;width:0}.top-btn{position:fixed;right:18px;bottom:18px;z-index:10;border:1px solid var(--thread);background:var(--paper);padding:10px 13px;border-radius:99px;cursor:pointer;opacity:0;pointer-events:none}.top-btn.show{opacity:1;pointer-events:auto}.counter-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}.counter-box{border:1px solid rgba(201,162,39,.45);padding:18px}.counter-box strong{display:block;font-size:34px;color:var(--thread)}body.dark{--paper:#11151B;--paper-ink:#E8E6E1;--paper-soft:#AEB6C2;--line:#303844}body.dark .hero-paper,body.dark section,body.dark footer{background:var(--paper)}body.dark .skill-pill,body.dark .download-card,body.dark .mini-card,body.dark .shot,body.dark .form input,body.dark .form textarea{background:#171d25}body.dark .nav-mini a,body.dark .nav-mini button,body.dark .top-btn{background:#171d25;color:#e8e6e1}
-  @media(max-width:900px){.nav-mini{position:static;padding:12px;background:var(--paper);max-width:none}.cards.three,.cards.four,.skill-grid,.gallery-grid,.download-grid,.counter-row{grid-template-columns:1fr 1fr}.hero-cta a{width:100%}}
-  @media(max-width:640px){.cards.three,.cards.four,.skill-grid,.gallery-grid,.download-grid,.counter-row{grid-template-columns:1fr}.roadmap-item{grid-template-columns:1fr}.nav-mini{justify-content:flex-start}}
+.nav-mini{position:fixed;top:18px;right:18px;z-index:10;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;max-width:720px}
+.nav-mini a,.nav-mini button{font-family:'Space Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.05em;border:1px solid rgba(201,162,39,.55);background:rgba(245,242,236,.86);color:var(--paper-ink);padding:8px 10px;border-radius:99px;text-decoration:none;backdrop-filter:blur(8px);cursor:pointer}
+.nav-mini a:hover,.nav-mini button:hover{background:var(--signal);border-color:var(--signal);color:#fff}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.hero-cta a{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--paper-ink);padding:12px 16px;border-radius:99px;text-decoration:none;font-weight:600}.hero-cta a:first-child{background:var(--paper-ink);color:var(--paper)}.hero-cta a:hover{background:var(--signal);border-color:var(--signal);color:#fff}.open-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--thread);border-radius:99px;padding:7px 11px;color:var(--paper-soft);width:max-content}.open-badge span{width:8px;height:8px;border-radius:50%;background:#29a36a;box-shadow:0 0 0 6px rgba(41,163,106,.12)}.cards.three{grid-template-columns:repeat(3,1fr)}.cards.four{grid-template-columns:repeat(4,1fr)}.mini-card{border:1px solid var(--line);background:rgba(255,255,255,.2);padding:20px;border-radius:0;min-height:150px}.mini-card h3{margin:0 0 8px}.mini-card p{margin:0;color:var(--paper-soft)}.skill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.skill-pill{border:1px solid var(--line);background:#fff8ed;padding:16px;font-weight:600}.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.shot{border:1px solid var(--line);background:#fff8ed}.shot-img{aspect-ratio:16/10;display:grid;place-items:center;background:var(--ink);color:#e8e6e1;font-family:'Space Mono',monospace;font-size:12px;text-align:center;padding:16px;overflow:hidden}.shot-img img{width:100%;height:100%;object-fit:cover;display:block}.shot h3{padding:14px;margin:0}.download-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.download-card{display:block;border:1px solid var(--line);background:#fff8ed;padding:22px;text-decoration:none}.download-card:hover{border-color:var(--signal);transform:translateY(-3px)}.roadmap{display:grid;gap:12px}.roadmap-item{display:grid;grid-template-columns:48px 1fr;gap:16px;align-items:start}.roadmap-num{width:40px;height:40px;border:1px solid var(--thread);border-radius:50%;display:grid;place-items:center;font-family:'Space Mono',monospace;color:var(--signal);background:var(--paper)}.form{display:grid;gap:12px;max-width:760px;margin:28px auto 0}.form input,.form textarea{width:100%;border:1px solid var(--line);background:#fff8ed;padding:13px 14px;color:var(--paper-ink)}.form textarea{min-height:130px}.progress{position:fixed;top:0;left:0;height:3px;background:var(--signal);z-index:11;width:0}.top-btn{position:fixed;right:18px;bottom:18px;z-index:10;border:1px solid var(--thread);background:var(--paper);padding:10px 13px;border-radius:99px;cursor:pointer;opacity:0;pointer-events:none}.top-btn.show{opacity:1;pointer-events:auto}.counter-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}.counter-box{border:1px solid rgba(201,162,39,.45);padding:18px}.counter-box strong{display:block;font-size:34px;color:var(--thread)}body.dark{--paper:#11151B;--paper-ink:#E8E6E1;--paper-soft:#AEB6C2;--line:#303844}body.dark .hero-paper,body.dark section,body.dark footer{background:var(--paper)}body.dark .skill-pill,body.dark .download-card,body.dark .mini-card,body.dark .shot,body.dark .form input,body.dark .form textarea{background:#171d25}body.dark .nav-mini a,body.dark .nav-mini button,body.dark .top-btn{background:#171d25;color:#e8e6e1}
+@media(max-width:900px){.nav-mini{position:static;padding:12px;background:var(--paper);max-width:none}.cards.three,.cards.four,.skill-grid,.gallery-grid,.download-grid,.counter-row{grid-template-columns:1fr 1fr}.hero-cta a{width:100%}}
+@media(max-width:640px){.cards.three,.cards.four,.skill-grid,.gallery-grid,.download-grid,.counter-row{grid-template-columns:1fr}.roadmap-item{grid-template-columns:1fr}.nav-mini{justify-content:flex-start}}
 </style></head>
 <body>
 <div class="progress" id="progress"></div>
 <nav class="nav-mini" aria-label="Portfolio navigation">
-  <a href="#about">About</a><a href="#skills">Skills</a><a href="#project">Project</a><a href="#gallery">Gallery</a><a href="#downloads">Downloads</a><a href="#contact">Contact</a><button id="themeBtn" type="button">Mode</button>
+<a href="#about">About</a><a href="#skills">Skills</a><a href="#project">Project</a><a href="#gallery">Gallery</a><a href="#downloads">Downloads</a><a href="#contact">Contact</a><button id="themeBtn" type="button">Mode</button>
 </nav>
 <header class="hero" id="home">
-  <div class="hero-ink">
-    <div class="code-block mono">
-      <div><span class="c">// portfolio_profile</span></div>
-      <div><span class="k">name</span>: <span class="s">"Pavithra Balaji"</span>,</div>
-      <div><span class="k">role</span>: <span class="s">"Digital Marketing Executive"</span>,</div>
-      <div><span class="k">education</span>: <span class="s">"BE CSE"</span>,</div>
-      <div><span class="k">focus</span>: <span class="s">"SEO + Ads + Analytics"</span>,</div>
-      <div><span class="k">status</span>: <span class="s">"Open to Work"</span></div>
-    </div>
-    <div class="counter-row">
-      <div class="counter-box"><strong class="counter" data-target="16">0</strong><span class="mono">Skills</span></div>
-      <div class="counter-box"><strong class="counter" data-target="20">0</strong><span class="mono">Audit Points</span></div>
-      <div class="counter-box"><strong class="counter" data-target="90">0</strong><span class="mono">Day Roadmap</span></div>
-    </div>
-  </div>
-  <div class="hero-paper">
-    <div class="seam"><span class="seam-tag mono">digital portfolio</span></div>
-    <span class="open-badge mono"><span></span>Open to Work</span>
-    <p class="eyebrow mono">Digital Marketing Executive</p>
-    <h1 class="display">Pavithra Balaji</h1>
-    <p class="lead">A BE CSE graduate and certified digital marketing fresher focused on SEO, Google Ads, Meta Ads, analytics, WordPress, content, and performance marketing. Looking for Digital Marketing Executive opportunities where I can support practical research, execution, reporting, and growth.</p>
-    <div class="hero-cta">
-      <a href="Pavithra%20Balaji%20Resume.pdf" download>Download Resume</a>
-      <a href="FreshlyMade_Digital_Marketing_Strategy.pdf" download>Download Project Report</a>
-      <a href="#contact">Contact Me</a>
-      <a href="#project">View Project</a>
-    </div>
-  </div>
+<div class="hero-ink">
+<div class="code-block mono">
+<div><span class="c">// portfolio_profile</span></div>
+<div><span class="k">name</span>: <span class="s">"Pavithra Balaji"</span>,</div>
+<div><span class="k">role</span>: <span class="s">"Digital Marketing Executive"</span>,</div>
+<div><span class="k">education</span>: <span class="s">"BE CSE"</span>,</div>
+<div><span class="k">focus</span>: <span class="s">"SEO + Ads + Analytics"</span>,</div>
+<div><span class="k">status</span>: <span class="s">"Open to Work"</span></div>
+</div>
+<div class="counter-row">
+<div class="counter-box"><strong class="counter" data-target="16">0</strong><span class="mono">Skills</span></div>
+<div class="counter-box"><strong class="counter" data-target="20">0</strong><span class="mono">Audit Points</span></div>
+<div class="counter-box"><strong class="counter" data-target="90">0</strong><span class="mono">Day Roadmap</span></div>
+</div>
+</div>
+<div class="hero-paper">
+<div class="seam"><span class="seam-tag mono">digital portfolio</span></div>
+<span class="open-badge mono"><span></span>Open to Work</span>
+<p class="eyebrow mono">Digital Marketing Executive</p>
+<h1 class="display">Pavithra Balaji</h1>
+<p class="lead">A BE CSE graduate and certified digital marketing fresher focused on SEO, Google Ads, Meta Ads, analytics, WordPress, content, and performance marketing. Looking for Digital Marketing Executive opportunities where I can support practical research, execution, reporting, and growth.</p>
+<div class="hero-cta">
+<a href="Pavithra%20Balaji%20Resume.pdf" download>Download Resume</a>
+<a href="FreshlyMade_Digital_Marketing_Strategy.pdf" download>Download Project Report</a>
+<a href="#contact">Contact Me</a>
+<a href="#project">View Project</a>
+</div>
+</div>
 </header>
 <section id="about" class="reveal">
-  <div class="section-head"><span class="section-num mono">01</span><h2>The Hybrid Edge</h2></div>
-  <p class="lede">Computer science thinking meets marketing execution. Pavithra brings a technical background, digital marketing certification, and a strong interest in SEO, paid ads, analytics, WordPress, and data-driven marketing.</p>
-  <div class="cards four">
-    <div class="mini-card"><h3>BE CSE</h3><p>Technical foundation for structured problem solving and analytical thinking.</p></div>
-    <div class="mini-card"><h3>Digital Marketing Certified</h3><p>Trained in SEO, paid ads, content, and digital campaign fundamentals.</p></div>
-    <div class="mini-card"><h3>Performance Mindset</h3><p>Interested in KPIs, reporting, search intent, and conversion paths.</p></div>
-    <div class="mini-card"><h3>Career Goal</h3><p>Seeking Digital Marketing Executive opportunities as a fresher.</p></div>
-  </div>
+<div class="section-head"><span class="section-num mono">01</span><h2>The Hybrid Edge</h2></div>
+<p class="lede">Computer science thinking meets marketing execution. Pavithra brings a technical background, digital marketing certification, and a strong interest in SEO, paid ads, analytics, WordPress, and data-driven marketing.</p>
+<div class="cards four">
+<div class="mini-card"><h3>BE CSE</h3><p>Technical foundation for structured problem solving and analytical thinking.</p></div>
+<div class="mini-card"><h3>Digital Marketing Certified</h3><p>Trained in SEO, paid ads, content, and digital campaign fundamentals.</p></div>
+<div class="mini-card"><h3>Performance Mindset</h3><p>Interested in KPIs, reporting, search intent, and conversion paths.</p></div>
+<div class="mini-card"><h3>Career Goal</h3><p>Seeking Digital Marketing Executive opportunities as a fresher.</p></div>
+</div>
 </section>
 <div class="stitch"></div>
 <section id="skills" class="reveal">
-  <div class="section-head"><span class="section-num mono">02</span><h2>Toolkit</h2></div>
-  <div class="skill-grid" id="skillGrid"></div>
+<div class="section-head"><span class="section-num mono">02</span><h2>Toolkit</h2></div>
+<div class="skill-grid" id="skillGrid"></div>
 </section>
 <div class="stitch"></div>
 <section id="project" class="reveal">
-  <div class="section-head"><span class="section-num mono">03</span><h2>Featured Project</h2></div>
-  <div class="terminal">
-    <div><span class="prompt">$</span> case-study --title "Digital Marketing Audit & Growth Strategy"</div>
-    <ul>
-      <li><span class="check">✓</span>Business: The FreshlyMade Resto Cafe</li>
-      <li><span class="check">✓</span>Duration: 4 Days</li>
-      <li><span class="check">✓</span>Project Type: Self-Initiated Portfolio Case Study</li>
-    </ul>
-    <div class="footnote">This is presented as a self-initiated portfolio case study, not invented work experience.</div>
-  </div>
-  <div class="cards three" id="projectGrid"></div>
+<div class="section-head"><span class="section-num mono">03</span><h2>Featured Project</h2></div>
+<div class="terminal">
+<div><span class="prompt">$</span> case-study --title "Digital Marketing Audit & Growth Strategy"</div>
+<ul>
+<li><span class="check">✓</span>Business: The FreshlyMade Resto Cafe</li>
+<li><span class="check">✓</span>Duration: 4 Days</li>
+<li><span class="check">✓</span>Project Type: Self-Initiated Portfolio Case Study</li>
+</ul>
+<div class="footnote">This is presented as a self-initiated portfolio case study, not invented work experience.</div>
+</div>
+<div class="cards three" id="projectGrid"></div>
 </section>
 <div class="stitch"></div>
 <section id="gallery" class="reveal">
-  <div class="section-head"><span class="section-num mono">04</span><h2>Project Gallery</h2></div>
-  <div class="gallery-grid" id="galleryGrid"></div>
+<div class="section-head"><span class="section-num mono">04</span><h2>Project Gallery</h2></div>
+<div class="gallery-grid" id="galleryGrid"></div>
 </section>
 <div class="stitch"></div>
 <section id="downloads" class="reveal">
-  <div class="section-head"><span class="section-num mono">05</span><h2>Downloads</h2></div>
-  <div class="download-grid">
-    <a class="download-card" href="Pavithra%20Balaji%20Resume.pdf" download><span class="badge badge-live">PDF</span><h3>Download Resume</h3><p>Updated resume file.</p></a>
-    <a class="download-card" href="FreshlyMade_Digital_Marketing_Strategy.pdf" download><span class="badge badge-practice">PDF</span><h3>Download Project Report</h3><p>FreshlyMade digital marketing strategy report.</p></a>
-    <a class="download-card" href="Pavithra%20Balaji%20CV.pdf" download><span class="badge badge-intern">PDF</span><h3>Download CV</h3><p>Detailed CV file.</p></a>
-    <a class="download-card" href="seo_audit_report.pdf" download><span class="badge badge-practice">PDF</span><h3>SEO Audit Report</h3><p>Detailed SEO audit report PDF.</p></a>
-  </div>
+<div class="section-head"><span class="section-num mono">05</span><h2>Downloads</h2></div>
+<div class="download-grid">
+<a class="download-card" href="Pavithra%20Balaji%20Resume.pdf" download><span class="badge badge-live">PDF</span><h3>Download Resume</h3><p>Updated resume file.</p></a>
+<a class="download-card" href="FreshlyMade_Digital_Marketing_Strategy.pdf" download><span class="badge badge-practice">PDF</span><h3>Download Project Report</h3><p>FreshlyMade digital marketing strategy report.</p></a>
+<a class="download-card" href="Pavithra%20Balaji%20CV.pdf" download><span class="badge badge-intern">PDF</span><h3>Download CV</h3><p>Detailed CV file.</p></a>
+<a class="download-card" href="seo_audit_report.pdf" download><span class="badge badge-practice">PDF</span><h3>SEO Audit Report</h3><p>Detailed SEO audit report PDF.</p></a>
+</div>
 </section>
 <div class="stitch"></div>
 <section id="certifications" class="reveal">
-  <div class="section-head"><span class="section-num mono">06</span><h2>Certifications</h2></div>
-  <div class="cards four">
-    <a class="mini-card" href="DM%20Certificate.pdf" download><h3>Digital Marketing Certificate</h3><p>Download certificate PDF.</p></a>
-    <a class="mini-card" href="HubSpot%20Inbound%20Marketing%20Certificate.png" target="_blank" rel="noopener"><img class="cert-img" src="HubSpot%20Inbound%20Marketing%20Certificate.png" alt="HubSpot Inbound Marketing certificate for Pavithra Balaji" loading="lazy"><h3>HubSpot Inbound Marketing</h3><p>Valid from Jun 12 2026 to Jul 11 2028.</p></a>
-    <a class="mini-card" href="HubSpot%20Content%20Marketing%20Certificate.png" target="_blank" rel="noopener"><img class="cert-img" src="HubSpot%20Content%20Marketing%20Certificate.png" alt="HubSpot Content Marketing certificate for Pavithra Balaji" loading="lazy"><h3>HubSpot Content Marketing</h3><p>Valid from Jun 12 2026 to Jul 11 2028.</p></a>
-    <div class="mini-card"><h3>Google Ads</h3><p>Coming Soon</p></div>
-  </div>
+<div class="section-head"><span class="section-num mono">06</span><h2>Certifications</h2></div>
+<div class="cards four">
+<a class="mini-card" href="DM%20Certificate.pdf" download><h3>Digital Marketing Certificate</h3><p>Download certificate PDF.</p></a>
+<a class="mini-card" href="HubSpot%20Inbound%20Marketing%20Certificate.png" target="_blank" rel="noopener"><img class="cert-img" src="HubSpot%20Inbound%20Marketing%20Certificate.png" alt="HubSpot Inbound Marketing certificate for Pavithra Balaji" loading="lazy"><h3>HubSpot Inbound Marketing</h3><p>Valid from Jun 12 2026 to Jul 11 2028.</p></a>
+<a class="mini-card" href="HubSpot%20Content%20Marketing%20Certificate.png" target="_blank" rel="noopener"><img class="cert-img" src="HubSpot%20Content%20Marketing%20Certificate.png" alt="HubSpot Content Marketing certificate for Pavithra Balaji" loading="lazy"><h3>HubSpot Content Marketing</h3><p>Valid from Jun 12 2026 to Jul 11 2028.</p></a>
+<div class="mini-card"><h3>Google Ads</h3><p>Coming Soon</p></div>
+</div>
 </section>
 <div class="stitch"></div>
 <section id="timeline" class="reveal">
-  <div class="section-head"><span class="section-num mono">07</span><h2>Training Log</h2></div>
-  <div class="roadmap" id="timelineGrid"></div>
+<div class="section-head"><span class="section-num mono">07</span><h2>Training Log</h2></div>
+<div class="roadmap" id="timelineGrid"></div>
 </section>
 <div class="stitch"></div>
 <section id="services" class="reveal">
-  <div class="section-head"><span class="section-num mono">08</span><h2>Services</h2></div>
-  <div class="cards four" id="servicesGrid"></div>
+<div class="section-head"><span class="section-num mono">08</span><h2>Services</h2></div>
+<div class="cards four" id="servicesGrid"></div>
 </section>
 <div class="stitch"></div>
 <section id="contact" class="contact reveal">
-  <p class="eyebrow" style="text-align:center;">Let's work together</p>
-  <h2 class="display">Open to digital marketing roles in Chennai & remote.</h2>
-  <div class="contact-links"><a href="mailto:pavithrabalaji777@gmail.com">pavithrabalaji777@gmail.com</a><a href="tel:+918248736898">+91 82487 36898</a><a href="https://github.com/Pavithra412" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/pavithra-balaji-750b09343" target="_blank" rel="noopener">LinkedIn</a></div>
-  <form class="form" action="mailto:pavithrabalaji777@gmail.com" method="post" enctype="text/plain"><input name="name" placeholder="Your name" required><input name="email" type="email" placeholder="Your email" required><textarea name="message" placeholder="Message" required></textarea><button class="send-btn" type="submit">Send Message</button></form>
+<p class="eyebrow" style="text-align:center;">Let's work together</p>
+<h2 class="display">Open to digital marketing roles in Chennai & remote.</h2>
+<div class="contact-links"><a href="mailto:pavithrabalaji777@gmail.com">pavithrabalaji777@gmail.com</a><a href="tel:+918248736898">+91 82487 36898</a><a href="https://github.com/Pavithra412" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/pavithra-balaji-750b09343" target="_blank" rel="noopener">LinkedIn</a></div>
+<form class="form" action="mailto:pavithrabalaji777@gmail.com" method="post" enctype="text/plain"><input name="name" placeholder="Your name" required><input name="email" type="email" placeholder="Your email" required><textarea name="message" placeholder="Message" required></textarea><button class="send-btn" type="submit">Send Message</button></form>
 </section>
 <footer>Pavithra Balaji · Chennai, India</footer>
 <button class="top-btn" id="topBtn" type="button">Top</button>
 <script>
 const skills=["SEO","Technical SEO","Local SEO","Keyword Research","Google Ads","Meta Ads","Google Analytics 4","Google Search Console","Content Marketing","Email Marketing","Canva","WordPress","Social Media Marketing","Competitor Analysis","Marketing Strategy","AI Tools"];
 const projects=["Business Overview","Problem Statement","Objectives","Market Analysis","SWOT Analysis","Competitor Analysis","SEO Audit","Technical SEO","Keyword Research","Google Business Profile Optimization","Google Ads Strategy","Meta Ads Strategy","Content Calendar","Email Marketing Strategy","Website Recommendations","AI Marketing Opportunities","KPIs","90-Day Growth Roadmap","Expected Results","Lessons Learned"];
-const gallery=[{name:"Project Cover",link:"FreshlyMade_Digital_Marketing_Strategy.pdf",type:"PDF"},{name:"SEO Audit",link:"seo_audit_report.pdf",type:"PDF"},{name:"SWOT Analysis",link:"FreshlyMade_Digital_Marketing_Strategy.pdf",type:"PDF"},{name:"Competitor Analysis",link:"FreshlyMade_Digital_Marketing_Strategy.pdf",type:"PDF"},{name:"Keyword Research",link:"seo_audit_report.pdf",type:"PDF"},{name:"Google Ads Strategy",link:"FreshlyMade_Digital_Marketing_Strategy.pdf",type:"PDF"},{name:"Meta Ads Strategy",link:"FreshlyMade_Digital_Marketing_Strategy.pdf",type:"PDF"},{name:"Inbound Marketing Certificate",link:"HubSpot%20Inbound%20Marketing%20Certificate.png",type:"Image"},{name:"Content Marketing Certificate",link:"HubSpot%20Content%20Marketing%20Certificate.png",type:"Image"}];
+const gallery=[{name:"Organic Cotton T-Shirt Poster",link:"Organic_Cotton_TShirt_Poster.jpg",type:"Canva Poster",image:"Organic_Cotton_TShirt_Poster.jpg"},{name:"Homemade Masala Podi Poster",link:"Masala_Podi_Poster.jpg",type:"Canva Poster",image:"Masala_Podi_Poster.jpg"},{name:"Used Car Showroom Poster",link:"Used_Car_Showroom_Poster.jpg",type:"Canva Poster",image:"Used_Car_Showroom_Poster.jpg"},{name:"Project Cover",link:"FreshlyMade_Digital_Marketing_Strategy.pdf",type:"PDF"},{name:"SEO Audit",link:"seo_audit_report.pdf",type:"PDF"},{name:"SWOT Analysis",link:"FreshlyMade_Digital_Marketing_Strategy.pdf",type:"PDF"},{name:"Competitor Analysis",link:"FreshlyMade_Digital_Marketing_Strategy.pdf",type:"PDF"},{name:"Keyword Research",link:"seo_audit_report.pdf",type:"PDF"},{name:"Google Ads Strategy",link:"FreshlyMade_Digital_Marketing_Strategy.pdf",type:"PDF"},{name:"Meta Ads Strategy",link:"FreshlyMade_Digital_Marketing_Strategy.pdf",type:"PDF"},{name:"Inbound Marketing Certificate",link:"HubSpot%20Inbound%20Marketing%20Certificate.png",type:"Image"},{name:"Content Marketing Certificate",link:"HubSpot%20Content%20Marketing%20Certificate.png",type:"Image"}];
 const timeline=["Course Completed","Practice Projects","Digital Marketing Audit","Portfolio Creation","Applying for Jobs","Continuous Learning"];
 const services=["SEO","Google Ads","Meta Ads","Website Audit","Keyword Research","Content Strategy","Local SEO","Marketing Analytics"];
 document.getElementById('skillGrid').innerHTML=skills.map(s=>`<div class="skill-pill">${s}</div>`).join('');
 document.getElementById('projectGrid').innerHTML=projects.map(s=>`<div class="card"><span class="badge badge-practice">Case Study</span><h3>${s}</h3><p>Included in the self-initiated restaurant cafe audit with practical recommendations, expected outcomes, and clear next steps.</p></div>`).join('');
-document.getElementById('galleryGrid').innerHTML=gallery.map(item=>`<div class="shot"><a href="${item.link}" target="_blank" rel="noopener"><div class="shot-img">${item.type}<br>${item.name}</div><h3>${item.name}</h3></a></div>`).join('');
+document.getElementById('galleryGrid').innerHTML=gallery.map(item=>`<div class="shot"><a href="${item.link}" target="_blank" rel="noopener"><div class="shot-img">${item.image?`<img src="${item.image}" alt="${item.name}" loading="lazy">`:`${item.type}<br>${item.name}`}</div><h3>${item.name}</h3></a></div>`).join('');
 document.getElementById('timelineGrid').innerHTML=timeline.map((s,i)=>`<div class="roadmap-item"><div class="roadmap-num">${i+1}</div><div class="mini-card"><h3>${s}</h3><p>${i<4?'Completed or in progress as part of portfolio preparation.':'Next step in the fresher digital marketing journey.'}</p></div></div>`).join('');
 document.getElementById('servicesGrid').innerHTML=services.map(s=>`<div class="mini-card"><h3>${s}</h3><p>Entry-level research, setup, audit, optimization, and reporting support.</p></div>`).join('');
 if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){const items=document.querySelectorAll('.reveal');const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target)}})},{threshold:.15});items.forEach(el=>obs.observe(el));}else{document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'))}
@@ -436,5 +424,3 @@ document.getElementById('topBtn').onclick=()=>scrollTo({top:0,behavior:'smooth'}
 </script>
 </body>
 </html>
-
-
